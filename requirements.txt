@@ -1,4 +1,3 @@
 BeautifulSoup4
 requests_html
 datetime
-csv
