@@ -14,10 +14,14 @@ soup = BeautifulSoup(response.content, 'lxml')
 table = soup.find('table', attrs={'class': 'table-light'})
 allTr = table.findAll('tr', attrs={'valign': 'top'})
 stocks = []
+dt = datetime.now()
 today = date.today()
 yesterday = today - timedelta(days = 1)
 yesterday = yesterday.strftime("%m/%d/%Y")
 yesterday = str(yesterday)
+begWeek = today - timedelta(days = 3)
+begWeek = yesterday.strftime("%m/%d/%Y")
+begWeek = str(yesterday)
 today = today.strftime("%m/%d/%Y")
 today = str(today)
 li1 = []
@@ -35,7 +39,7 @@ if len(li1) > 1:
         dt = datetime.strptime(st[5], "%m/%d/%Y")
         st[5] = dt.strftime("%m/%d/%Y")
         st[5] = str(st[5])
-        if st[5] == yesterday:
+        if (st[5] == yesterday and dt.weekday() != 0) or (st[5] == begWeek and dt.weekday() == 0):
             existingStock.append(st[0])
     print(existingStock)
 for i in range(len(allTr)):
