@@ -39,7 +39,7 @@ if len(li1) > 1:
             existingStock.append(st[0])
     print(existingStock)
 for i in range(len(allTr)):
-    inARow = ''
+    inARow = 'no'
     a = allTr[i].findAll('a', attrs={'class': 'screener-link'})
     if a[1].text in existingStock:
         inARow = 'yes'
