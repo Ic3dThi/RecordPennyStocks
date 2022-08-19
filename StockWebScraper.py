@@ -20,11 +20,13 @@ yesterday = today - timedelta(days = 1)
 yesterday = yesterday.strftime("%m/%d/%Y")
 yesterday = str(yesterday)
 begWeek = today - timedelta(days = 3)
-begWeek = yesterday.strftime("%m/%d/%Y")
-begWeek = str(yesterday)
+begWeek = begWeek.strftime("%m/%d/%Y")
+begWeek = str(begWeek)
 today = today.strftime("%m/%d/%Y")
 today = str(today)
+dow = dt.weekday()
 li1 = []
+weekDay = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 if os.path.isfile('Pennystock.csv'):
     with open('Pennystock.csv') as file1:
         reader1 = csv.reader(file1)
@@ -39,7 +41,7 @@ if len(li1) > 1:
         dt = datetime.strptime(st[5], "%m/%d/%Y")
         st[5] = dt.strftime("%m/%d/%Y")
         st[5] = str(st[5])
-        if (st[5] == yesterday and dt.weekday() != 0) or (st[5] == begWeek and dt.weekday() == 0):
+        if (st[5] == yesterday and dow != 0) or (st[5] == begWeek and dow == 0):
             existingStock.append(st[0])
     print(existingStock)
 for i in range(len(allTr)):
@@ -47,7 +49,7 @@ for i in range(len(allTr)):
     a = allTr[i].findAll('a', attrs={'class': 'screener-link'})
     if a[1].text in existingStock:
         inARow = 'yes'
-    stocks.append([a[1].text, a[2].text, a[3].text, a[7].text, a[8].text, today, inARow])
+    stocks.append([a[1].text, a[2].text, a[3].text, a[7].text, a[8].text, today, weekDay[dow-1], inARow])
 with open('Pennystock.csv', 'a', newline= '') as f:
         # using csv.writer method from CSV package
         write = csv.writer(f)
