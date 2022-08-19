@@ -1,4 +1,4 @@
-BeautifulSoup
+BeautifulSoup4
 requests_html
 datetime
 os.path
