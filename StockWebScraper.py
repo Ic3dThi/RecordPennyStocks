@@ -49,7 +49,7 @@ for i in range(len(allTr)):
     a = allTr[i].findAll('a', attrs={'class': 'screener-link'})
     if a[1].text in existingStock:
         inARow = 'yes'
-    stocks.append([a[1].text, a[2].text, a[3].text, a[7].text, a[8].text, today, weekDay[dow-1], inARow])
+    stocks.append([a[1].text, a[2].text, a[3].text, a[7].text, a[8].text, today, weekDay[dow], inARow])
 with open('Pennystock.csv', 'a', newline= '') as f:
         # using csv.writer method from CSV package
         write = csv.writer(f)
