@@ -11,7 +11,7 @@ url = 'https://finviz.com/screener.ashx?v=111&f=geo_usa,sh_curvol_o200,sh_price_
 response = s.get(url)
 response.html.render()
 soup = BeautifulSoup(response.content, 'lxml')
-table = soup.find('table', attrs={'class': 'table-light'})
+table = soup.find('table', attrs={'class': 'styled-table-new'})
 allTr = table.findAll('tr', attrs={'valign': 'top'})
 stocks = []
 dt = datetime.now()
@@ -46,10 +46,14 @@ if len(li1) > 1:
     print(existingStock)
 for i in range(len(allTr)):
     inARow = 'no'
-    a = allTr[i].findAll('a', attrs={'class': 'screener-link'})
-    if a[1].text in existingStock:
+    stockName = allTr[i].contents[3].findAll('a')[0].text
+    category = allTr[i].contents[4].findAll('a')[0].text
+    subcategory = allTr[i].contents[5].findAll('a')[0].text
+    price = allTr[i].contents[9].findAll('a')[0].text
+    growth = allTr[i].contents[10].findAll('a')[0].text
+    if stockName in existingStock:
         inARow = 'yes'
-    stocks.append([a[1].text, a[2].text, a[3].text, a[7].text, a[8].text, today, weekDay[dow], inARow])
+    stocks.append([stockName, category, subcategory, price, growth, today, weekDay[dow], inARow])
 with open('Pennystock.csv', 'a', newline= '') as f:
         # using csv.writer method from CSV package
         write = csv.writer(f)
